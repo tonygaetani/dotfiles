@@ -1,0 +1,16 @@
+# zsh options
+setopt HIST_IGNORE_SPACE
+
+# set up fast
+eval "$(fasd --init auto)"
+
+# zsh git prompt is nice :)
+git clone https://github.com/olivierverdier/zsh-git-prompt.git ~/.zsh-git-prompt > /dev/null 2>&1
+source ~/.zsh-git-prompt/zshrc.sh > /dev/null 2>&1
+
+# zsh prompt
+PROMPT='%? | %d $(git_super_status)
+%# '
+
+# common shell profile
+source ~/.profile

@@ -1,0 +1,3 @@
+.old*
+.DS_STORE
+shell/env/*

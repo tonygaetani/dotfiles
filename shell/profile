@@ -1,0 +1,22 @@
+# path
+# add macports path
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# aliases
+# general
+alias ls='ls -Glah'
+# git
+alias git-st='git status --porcelain | cut -f 3 -d " "'
+alias git-st-oneline='git-st | tr "\n" " "'
+alias git-push-branch='git push -u origin '
+# sublime text - requires command line tools installed and configured
+alias subl-st='subl -n $(git-st-oneline) &'
+# ssl
+alias createcert='openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 999'
+# random...
+# this one requires recode to be installed
+alias random_ascii="wget -qO - http://www.asciiartfarts.com/random.cgi | \
+			sed -n '/<pre>/,/<\/pre>/p' | \
+			sed -n '/<table*/,/<\/table>/p' | \
+			sed '1d' | \
+			sed '$d' | \
+			recode html..ascii"
