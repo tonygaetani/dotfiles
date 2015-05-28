@@ -37,6 +37,10 @@ done
 
 # profile is a copy, not a symbolic link
 cp "${BASEDIR}/shell/profile" ~/.profile
+if [[ "$(uname -a)" == "*Darwin*" ]]; then
+	echo 'set-option -g default-command "reattach-to-user-namespace -l zsh"' >> ~/.profile
+fi
+
 # add environment vars to profile
 for file in $(/bin/ls "${BASEDIR}/shell/env")
 do
