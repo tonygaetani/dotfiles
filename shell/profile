@@ -14,6 +14,8 @@ alias git-push-branch='git push -u origin '
 alias subl-st='subl -n $(git-st-oneline) &'
 # ssl
 alias createcert='openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 999'
+alias encrypt='openssl aes-256-cbc -a -salt'
+alias decrypt='openssl aes-256-cbc -d -a'
 # random...
 # this one requires recode to be installed
 alias random_ascii="wget -qO - http://www.asciiartfarts.com/random.cgi | \
