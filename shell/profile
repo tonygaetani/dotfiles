@@ -33,14 +33,8 @@ alias git-ppc='__git_ppc'
 alias subl-st='subl -n $(git-st-oneline) &'
 # ssl
 alias createcert='openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 999'
-function __encrypt {
-	openssl aes-256-cbc -a -in $1 -out >(cat)
-}
-alias encrypt='__encrypt'
-function __decrypt {
-	openssl aes-256-cbc -d -a -in $1 -out >(cat)
-}
-alias decrypt='__decrypt'
+alias encrypt='openssl aes-256-cbc -a'
+alias decrypt='openssl aes-256-cbc -d -a'
 # random...
 # this one requires recode to be installed
 alias random_ascii="wget -qO - http://www.asciiartfarts.com/random.cgi | \
