@@ -27,11 +27,12 @@ a command line productivity booster
 see fasd/README.md for (much) more information
 
 # Installation
-Install all dependencies are satisfied and then run setup.bash.
+Ensure all dependencies are satisfied and then run setup:
+```
+./setup
+```
 
-### setup.bash
+### setup
 
 Saves any files/folders that it might overwrite to .old{timestamp} where timestamp is a tai64n format timestamp, then copies files and creates symbolic links to configure the environment.
 
-# Other
-My iTerm2 configuration files are also included, but not set up by `setup.bash`.
