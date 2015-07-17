@@ -35,11 +35,8 @@ do
 	mv "${file}" "${OLDDIR}" > /dev/null 2>&1 || true
 done
 
-# profile is a copy, not a symbolic link
+# profile is a copy, not a symlink
 cp "${BASEDIR}/shell/profile" ~/.profile
-if [[ "$(uname)" == "Darwin" ]]; then
-	echo 'set-option -g default-command "reattach-to-user-namespace -l zsh"' >> ~/.profile
-fi
 
 # add environment vars to profile
 for file in $(/bin/ls "${BASEDIR}/shell/env")
@@ -57,6 +54,9 @@ ln -s "${BASEDIR}/shell/zshrc" ~/.zshrc
 ln -s "${BASEDIR}/vim/vimrc" ~/.vimrc
 ln -s "${BASEDIR}/vim/" ~/.vim
 
-# tmux configuration
-ln -s "${BASEDIR}/tmux/tmux.conf" ~/.tmux.conf
+# tmux configuration is a copy, not a symlink
+cp "${BASEDIR}/tmux/tmux.conf" ~/.tmux.conf
+if [[ "$(uname)" == "Darwin" ]]; then
+	echo 'set-option -g default-command "reattach-to-user-namespace -l zsh"' >> ~/.tmux.conf
+fi
 
