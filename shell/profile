@@ -13,19 +13,19 @@ alias git-push-branch='git push -u origin '
 function __git_ppc {
 	echo 'stashing...'
 	git stash save
-	test $? = 1 || return
+	test $? != 1 || return
 	echo '...stashed'
 	echo 'pulling...'
 	git pull --rebase
-	test $? = 1 || return
+	test $? != 1 || return
 	echo '...pulled'
 	echo 'pushing...'
 	git push
-	test $? = 1 || return
+	test $? != 1 || return
 	echo '...pushed'
 	echo 'poping stash...'
 	git stash pop
-	test $? = 1 || return
+	test $? != 1 || return
 	echo '...popped'
 }
 alias git-ppc='__git_ppc'
