@@ -29,6 +29,7 @@ function __git_ppc {
 	echo '...popped'
 }
 alias git-ppc='__git_ppc'
+alias githome='git -c user.name="tony gaetani" -c user.email="tony.gaetani@gmail.com"'
 # sublime text - requires command line tools installed and configured
 alias subl-st='subl -n $(git-st-oneline) &'
 # ssl
