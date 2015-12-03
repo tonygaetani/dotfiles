@@ -8,7 +8,7 @@ set number
 set backspace=2
 set backspace=indent,eol,start
 " use 4 space charachters for indentation
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set tabstop=4 softtabstop=0 shiftwidth=4 smarttab
 " training wheels
 noremap <Up> <NOP>
 noremap <Down> <NOP>
