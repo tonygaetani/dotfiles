@@ -2,7 +2,7 @@
 setopt HIST_IGNORE_SPACE
 setopt IGNORE_EOF
 
-# set up fast
+# set up fasd
 eval "$(fasd --init auto)"
 
 # zsh git prompt is nice :)
@@ -12,6 +12,8 @@ source ~/.zsh-git-prompt/zshrc.sh > /dev/null 2>&1
 # zsh prompt
 PROMPT='%? | %d $(git_super_status)
 %# '
+
+fpath=(~/.zsh $fpath)
 
 # common shell profile
 source ~/.profile
