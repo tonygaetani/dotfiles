@@ -4,4 +4,3 @@ git
 vim
 tmux
 tai64n
-fasd

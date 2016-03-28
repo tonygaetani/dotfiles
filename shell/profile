@@ -3,6 +3,7 @@ eval $(ssh-agent > /dev/null 2>&1)
 # path
 # add macports path
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home'
 # aliases
 # general
 alias ls='ls -Glah'
