@@ -26,20 +26,27 @@ do
 	fi
 done
 
+if [[ -z "${BASEDIR-}" ]]; then
+  BASEDIR=$DIR
+fi
+
+if [[ -z "${HOMEDIR-}" ]]; then
+  HOMEDIR=~/
+fi
+
 # setup
 OLDDIR=.old$(echo "" | tai64n)
-DOTFILES=(~/.profile \
-~/.bash_profile \
-~/.zshrc \
-~/.zsh \
-~/.zsh-git-prompt \
-~/.vimrc \
-~/.vim \
-~/.tmux.conf \
-~/.tmux \
-~/.oh-my-git \
-~/.antigen)
-BASEDIR=$DIR
+DOTFILES=("${HOMEDIR}/.profile" \
+"${HOMEDIR}/.bash_profile" \
+"${HOMEDIR}/.zshrc" \
+"${HOMEDIR}/.zsh" \
+"${HOMEDIR}/.zsh-git-prompt" \
+"${HOMEDIR}/.vimrc" \
+"${HOMEDIR}/.vim" \
+"${HOMEDIR}/.tmux.conf" \
+"${HOMEDIR}/.tmux" \
+"${HOMEDIR}/.oh-my-git" \
+"${HOMEDIR}/.antigen")
 
 # remove the old files
 mkdir -p "${OLDDIR}"
@@ -50,27 +57,27 @@ do
 done
 
 # profile is a copy, not a symlink
-cp "${BASEDIR}/shell/profile" ~/.profile
+cp "${BASEDIR}/shell/profile" ${HOMEDIR}/.profile
 
 # add environment vars to profile
 for file in $(/bin/ls "${BASEDIR}/shell/env")
 do
-	echo $(basename "${BASEDIR}/shell/env/${file}")=$(cat "${BASEDIR}/shell/env/${file}") >> ~/.profile
+	echo $(basename "${BASEDIR}/shell/env/${file}")=$(cat "${BASEDIR}/shell/env/${file}") >> ${HOMEDIR}/.profile
 done
 
 # bash
-ln -s "${BASEDIR}/shell/bash_profile" ~/.bash_profile
+ln -s "${BASEDIR}/shell/bash_profile" ${HOMEDIR}/.bash_profile
 
 # zsh
-ln -s "${BASEDIR}/shell/zshrc" ~/.zshrc
+ln -s "${BASEDIR}/shell/zshrc" ${HOMEDIR}/.zshrc
 
 # vim
-ln -s "${BASEDIR}/vim/vimrc" ~/.vimrc
-ln -s "${BASEDIR}/vim/" ~/.vim
+ln -s "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
+ln -s "${BASEDIR}/vim/" ${HOMEDIR}/.vim
 
 # tmux configuration is a copy, not a symlink
-cp "${BASEDIR}/tmux/tmux.conf" ~/.tmux.conf
+cp "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
 if [[ "$(uname)" == "Darwin" ]]; then
-	echo 'set-option -g default-command "reattach-to-user-namespace -l zsh"' >> ~/.tmux.conf
+	echo 'set-option -g default-command "reattach-to-user-namespace -l zsh"' >> ${HOMEDIR}/.tmux.conf
 fi
 
