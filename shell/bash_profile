@@ -1,6 +1,5 @@
 # set up fasd
-if [[ -z "$(which fasd)" ]]; then
-  eval "$(fasd --init auto)"
-fi
+eval "$(/bin/bash -c 'fasd --init auto' 2>/dev/null)"
+
 source ~/.profile
 
