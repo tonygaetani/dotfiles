@@ -10,6 +10,7 @@ alias ls='ls -Glah'
 alias git-st='git status --porcelain | cut -f 3 -d " "'
 alias git-st-oneline='git-st | tr "\n" " "'
 alias git-push-branch='git push -u origin '
+alias git-amend-author='gitw commit -amend --author "tony gaetani <tony.gaetani@gmail.com>"'
 function __git_ppc {
 	echo 'stashing...'
 	git stash save
