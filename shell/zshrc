@@ -3,7 +3,9 @@ setopt HIST_IGNORE_SPACE
 setopt IGNORE_EOF
 
 # set up fasd
-eval "$(fasd --init auto)" > /dev/null 2>&1
+if [[ -z "$(which fasd)"]]; then
+  eval "$(fasd --init auto)"
+fi
 
 # zsh git prompt is nice :)
 git clone https://github.com/olivierverdier/zsh-git-prompt.git ~/.zsh-git-prompt > /dev/null 2>&1
