@@ -16,16 +16,6 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 IFS=$'\n\t'
 
-# check dependencies
-DEPENDENCIES=($(cat dependencies.txt))
-for dep in "${DEPENDENCIES[@]}"
-do
-	if [[ -z $(which "${dep}") ]]; then
-		echo "missing dependency: ${dep}"
-		exit 100;
-	fi
-done
-
 if [[ -z "${BASEDIR-}" ]]; then
   BASEDIR=$DIR
 fi
@@ -46,7 +36,8 @@ DOTFILES=("${HOMEDIR}/.profile" \
 "${HOMEDIR}/.tmux.conf" \
 "${HOMEDIR}/.tmux" \
 "${HOMEDIR}/.oh-my-git" \
-"${HOMEDIR}/.antigen")
+"${HOMEDIR}/.antigen" \
+"${HOMEDIR}/.spacemacs")
 
 # remove the old files
 mkdir -p "${OLDDIR}"
@@ -74,6 +65,9 @@ ln -s "${BASEDIR}/shell/zshrc" ${HOMEDIR}/.zshrc
 # vim
 ln -s "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
 ln -s "${BASEDIR}/vim/" ${HOMEDIR}/.vim
+
+# emacs
+ln -s "${BASEDIR}/emacs/spacemacs" ${HOMEDIR}/.spacemacs
 
 # tmux configuration is a copy, not a symlink
 cp "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
