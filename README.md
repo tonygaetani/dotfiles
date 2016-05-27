@@ -1,23 +1,13 @@
 # Dotfiles
+
 Replicates my command line ui.
 
 # Dependencies
-See dependencies.txt, all commands must be discoverable by `which`.
 
-### tai64n
-
-a precise timestamp utility provided by daemontools
-```
-  apt-get install daemontools
-```
-
-```
-  brew install daemontools
-```
-
-### fasd
+## fasd
 
 a command line productivity booster
+
 ```
   git clone https://github.com/clvv/fasd
   cd fasd
@@ -27,12 +17,14 @@ a command line productivity booster
 see fasd/README.md for (much) more information
 
 # Installation
+
 Ensure all dependencies are satisfied and then run setup:
+
 ```
 ./setup
 ```
 
-### setup
+## setup
 
 Saves any files/folders that it might overwrite to .old{timestamp} where timestamp is a tai64n format timestamp, then copies files and creates symbolic links to configure the environment.
 

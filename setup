@@ -5,7 +5,7 @@ IFS=
 # http://stackoverflow.com/a/246128/6554
 SOURCE="${BASH_SOURCE[0]}"
 # resolve $SOURCE until the file is no longer a symlink
-while [ -h "$SOURCE" ]; do 
+while [ -h "$SOURCE" ]; do
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
   SOURCE="$(readlink "$SOURCE")"
   # if $SOURCE was a relative symlink, we need to resolve it relative to the
@@ -16,16 +16,18 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 IFS=$'\n\t'
 
+# BASEDIR - directory containing dotfiles content source
 if [[ -z "${BASEDIR-}" ]]; then
   BASEDIR=$DIR
 fi
 
+# HOMEDIR - directory that will receive dotfiles
 if [[ -z "${HOMEDIR-}" ]]; then
   HOMEDIR=~/
 fi
 
-# setup
-OLDDIR=.old$(echo "" | tai64n)
+# OLDDIR - directory that will receive old dotfiles in HOMEDIR
+OLDDIR=.old$(date +%s)
 DOTFILES=("${HOMEDIR}/.profile" \
 "${HOMEDIR}/.bash_profile" \
 "${HOMEDIR}/.zshrc" \
@@ -48,13 +50,7 @@ do
 done
 
 # profile is a copy, not a symlink
-cp "${BASEDIR}/shell/profile" ${HOMEDIR}/.profile
-
-# add environment vars to profile
-for file in $(/bin/ls "${BASEDIR}/shell/env")
-do
-	echo $(basename "${BASEDIR}/shell/env/${file}")=$(cat "${BASEDIR}/shell/env/${file}") >> ${HOMEDIR}/.profile
-done
+ln -s "${BASEDIR}/shell/profile" ${HOMEDIR}/.profile
 
 # bash
 ln -s "${BASEDIR}/shell/bash_profile" ${HOMEDIR}/.bash_profile
@@ -64,14 +60,15 @@ ln -s "${BASEDIR}/shell/zshrc" ${HOMEDIR}/.zshrc
 
 # vim
 ln -s "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
-ln -s "${BASEDIR}/vim/" ${HOMEDIR}/.vim
 
 # emacs
 ln -s "${BASEDIR}/emacs/spacemacs" ${HOMEDIR}/.spacemacs
 
-# tmux configuration is a copy, not a symlink
-cp "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
-if [[ "$(uname)" == "Darwin" ]]; then
-	echo 'set-option -g default-command "reattach-to-user-namespace -l zsh"' >> ${HOMEDIR}/.tmux.conf
+# tmux
+ln -s "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
+if [[ -z "$(uname | grep Darwin || true)" ]]; then
+    # non-Mac, assume Linux
+    ln -s "${BASEDIR}/tmux/tmux.linux.conf" ${HOMEDIR}/.tmux.linux.conf
+else
+    ln -s "${BASEDIR}/tmux/tmux.macosx.conf" ${HOMEDIR}/.tmux.macosx.conf
 fi
-
