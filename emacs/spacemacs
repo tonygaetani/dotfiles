@@ -37,7 +37,11 @@ values."
      syntax-checking
      version-control
      clojure
+     clojure-mode
      cider-mode
+     paredit-mode
+     paren-face
+     clj-refactor-mode
      python
      java
      puppet
@@ -216,7 +220,7 @@ values."
    dotspacemacs-line-numbers t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode nil
+   dotspacemacs-smartparens-strict-mode t
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
@@ -247,8 +251,10 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq python-fill-column 99)
-  )
+  (setq python-fill-column 120)
+  (setq cider-cljs-lein-repl
+        "(do (user/run)
+             (user/browser-repl))"))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
