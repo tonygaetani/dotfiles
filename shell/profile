@@ -2,7 +2,9 @@
 eval $(ssh-agent > /dev/null 2>&1)
 # path
 # add macports path
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+export PATH="/opt/local/bin:/opt/local/sbin:${PATH}"
+# add home bin path
+export PATH="$(echo ~/bin):${PATH}"
 # aliases
 # general
 alias ls='ls -Glah'
@@ -40,11 +42,9 @@ alias decrypt='openssl aes-256-cbc -d -a'
 # zlib 
 alias zcompress='python -c "import zlib;import sys; sys.stdout.write(zlib.compress(sys.stdin.read()))"'
 alias zdecompress='python -c "import zlib;import sys; sys.stdout.write(zlib.decompress(sys.stdin.read()))"'
-# random...
-# this one requires recode to be installed
-alias random_ascii="wget -qO - http://www.asciiartfarts.com/random.cgi | \
-			sed -n '/<pre>/,/<\/pre>/p' | \
-			sed -n '/<table*/,/<\/table>/p' | \
-			sed '1d' | \
-			sed '$d' | \
-			recode html..ascii"
+# development stuff
+export PATH="$(echo ~/SWEngineering/android-sdk-linux):${PATH}"
+export ANDROID_HOME="$(echo ~/SWEngineering/android-sdk-linux)"
+export DOCKER_EMAIL='tony.gaetani@gmail.com'
+export DOCKER_USER='tonygaetani'
+
