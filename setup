@@ -72,6 +72,6 @@ if [[ -z "$(uname | grep Darwin || true)" ]]; then
     # install-updates
     mkdir -p "${HOMEDIR}/bin/"
     ln -sf "${BASEDIR}/install-updates.sh" "${HOMEDIR}/bin/install-updates.sh"
-else
+#else
     # Mac
 fi
