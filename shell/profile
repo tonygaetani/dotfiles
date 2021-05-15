@@ -13,6 +13,8 @@ export DOCKER_USER='tonygaetani'
 # vault
 export VAULT_ADDR=https://vault.6river.org
 
+source ~/.git-prompt.sh
+
 # additional profiles
 mkdir -p ~/.profile.d 2>/dev/null || true
 for profile in $(find ~/.profile.d -type f,l); do

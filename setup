@@ -49,30 +49,33 @@ do
 done
 
 # profile
-ln -sf "${BASEDIR}/shell/profile" ${HOMEDIR}/.profile
+mkdir -p "${HOMEDIR}/.profile.d"
+ln -sf "${BASEDIR}/shell/profile" "${HOMEDIR}/.profile"
 
 # bash
-ln -sf "${BASEDIR}/shell/bashrc" ${HOMEDIR}/.bashrc
-ln -sf "${BASEDIR}/shell/bash_profile" ${HOMEDIR}/.bash_profile
-ln -sf "${BASEDIR}/shell/bash_aliases" ${HOMEDIR}/.bash_aliases
+ln -sf "${BASEDIR}/shell/git-prompt.sh" "${HOMEDIR}/.git-prompt.sh"
+ln -sf "${BASEDIR}/shell/bashrc" "${HOMEDIR}/.bashrc"
+ln -sf "${BASEDIR}/shell/bash_profile" "${HOMEDIR}/.bash_profile"
+ln -sf "${BASEDIR}/shell/bash_aliases" "${HOMEDIR}/.bash_aliases"
 
 # vim
-ln -sf "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
+ln -sf "${BASEDIR}/vim/vimrc" "${HOMEDIR}/.vimrc"
 
 # tmux
-ln -sf "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
+ln -sf "${BASEDIR}/tmux/tmux.conf" "${HOMEDIR}/.tmux.conf"
 
 # os-specific
 if [[ -z "$(uname | grep Darwin || true)" ]]; then
     # non-Mac, assume Linux
+    ln -sf "${BASEDIR}/shell/profile_linux" "${HOMEDIR}/.profile.d/profile_linux"
     
     # install-updates
-    mkdir -p ${HOMEDIR}/bin/
-    ln -sf "${BASEDIR}/install-updates.sh" ${HOMEDIR}/bin/install-updates.sh
+    mkdir -p "${HOMEDIR}/bin/"
+    ln -sf "${BASEDIR}/install-updates.sh" "${HOMEDIR}/bin/install-updates.sh"
 
     # tmux
-    ln -sf "${BASEDIR}/tmux/tmux.linux.conf" ${HOMEDIR}/.tmux.linux.conf
+    ln -sf "${BASEDIR}/tmux/tmux.linux.conf" "${HOMEDIR}/.tmux.linux.conf"
 else
     # tmux
-    ln -sf "${BASEDIR}/tmux/tmux.macosx.conf" ${HOMEDIR}/.tmux.macosx.conf
+    ln -sf "${BASEDIR}/tmux/tmux.macosx.conf" "${HOMEDIR}/.tmux.macosx.conf"
 fi

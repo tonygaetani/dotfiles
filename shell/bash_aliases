@@ -1,4 +1,4 @@
-alias ls='ls -Glah --color=always'
+alias ls='ls -Glah'
 alias watch='watch '
 
 # network compression stuff
