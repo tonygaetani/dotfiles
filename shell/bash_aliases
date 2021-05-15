@@ -27,7 +27,7 @@ git_ppc() {
 	test $? != 1 || return
 	echo '...popped'
 }
-alias git-clean-branches='git branch -vv | grep origin | grep gone | awk \'{print $1}\' | xargs -L 1 git branch -d'
+alias git-clean-branches='git branch -vv | grep origin | grep gone | awk "{print $1}" | xargs -L 1 git branch -d'
 
 # ssl
 alias createcert='openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 999'

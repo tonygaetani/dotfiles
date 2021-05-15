@@ -36,4 +36,4 @@ Ensure all dependencies are satisfied and then run setup:
 
 ## setup
 
-Saves any files/folders that it might overwrite to .old{timestamp} where timestamp is a tai64n format timestamp, then copies files and creates symbolic links to configure the environment.
+Saves any files/folders that it might overwrite to .old{timestamp}, then copies files and creates symbolic links to configure the environment.

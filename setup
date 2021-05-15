@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+if [[ -n "${DEBUG:-}" ]]; then
+  set -x
+fi
+
 set -euo pipefail
 
 IFS=
@@ -45,21 +49,21 @@ do
 done
 
 # profile
-ln -s "${BASEDIR}/shell/profile" ${HOMEDIR}/.profile
+ln -sf "${BASEDIR}/shell/profile" ${HOMEDIR}/.profile
 
 # bash
-ln -s "${BASEDIR}/shell/bashrc" ${HOMEDIR}/.bashrc
-ln -s "${BASEDIR}/shell/bash_profile" ${HOMEDIR}/.bash_profile
-ln -s "${BASEDIR}/shell/bash_aliases" ${HOMEDIR}/.bash_aliases
+ln -sf "${BASEDIR}/shell/bashrc" ${HOMEDIR}/.bashrc
+ln -sf "${BASEDIR}/shell/bash_profile" ${HOMEDIR}/.bash_profile
+ln -sf "${BASEDIR}/shell/bash_aliases" ${HOMEDIR}/.bash_aliases
 
 # vim
-ln -s "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
+ln -sf "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
 
 # tmux
-ln -s "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
+ln -sf "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
 if [[ -z "$(uname | grep Darwin || true)" ]]; then
     # non-Mac, assume Linux
-    ln -s "${BASEDIR}/tmux/tmux.linux.conf" ${HOMEDIR}/.tmux.linux.conf
+    ln -sf "${BASEDIR}/tmux/tmux.linux.conf" ${HOMEDIR}/.tmux.linux.conf
 else
-    ln -s "${BASEDIR}/tmux/tmux.macosx.conf" ${HOMEDIR}/.tmux.macosx.conf
+    ln -sf "${BASEDIR}/tmux/tmux.macosx.conf" ${HOMEDIR}/.tmux.macosx.conf
 fi
