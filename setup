@@ -72,10 +72,6 @@ if [[ -z "$(uname | grep Darwin || true)" ]]; then
     # install-updates
     mkdir -p "${HOMEDIR}/bin/"
     ln -sf "${BASEDIR}/install-updates.sh" "${HOMEDIR}/bin/install-updates.sh"
-
-    # tmux
-    ln -sf "${BASEDIR}/tmux/tmux.linux.conf" "${HOMEDIR}/.tmux.linux.conf"
 else
-    # tmux
-    ln -sf "${BASEDIR}/tmux/tmux.macosx.conf" "${HOMEDIR}/.tmux.macosx.conf"
+    # Mac
 fi
