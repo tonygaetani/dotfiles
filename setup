@@ -61,9 +61,18 @@ ln -sf "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
 
 # tmux
 ln -sf "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf
+
+# os-specific
 if [[ -z "$(uname | grep Darwin || true)" ]]; then
     # non-Mac, assume Linux
+    
+    # install-updates
+    mkdir -p ${HOMEDIR}/bin/
+    ln -sf "${BASEDIR}/install-updates.sh" ${HOMEDIR}/bin/install-updates.sh
+
+    # tmux
     ln -sf "${BASEDIR}/tmux/tmux.linux.conf" ${HOMEDIR}/.tmux.linux.conf
 else
+    # tmux
     ln -sf "${BASEDIR}/tmux/tmux.macosx.conf" ${HOMEDIR}/.tmux.macosx.conf
 fi
