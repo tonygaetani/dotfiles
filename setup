@@ -30,16 +30,11 @@ fi
 OLDDIR=.old$(date +%s)
 DOTFILES=("${HOMEDIR}/.profile" \
 "${HOMEDIR}/.bash_profile" \
-"${HOMEDIR}/.zshrc" \
-"${HOMEDIR}/.zsh" \
-"${HOMEDIR}/.zsh-git-prompt" \
 "${HOMEDIR}/.vimrc" \
 "${HOMEDIR}/.vim" \
 "${HOMEDIR}/.tmux.conf" \
 "${HOMEDIR}/.tmux" \
-"${HOMEDIR}/.oh-my-git" \
-"${HOMEDIR}/.antigen" \
-"${HOMEDIR}/.spacemacs")
+)
 
 # remove the old files
 mkdir -p "${OLDDIR}"
@@ -49,20 +44,16 @@ do
 	mv "${file}" "${OLDDIR}" > /dev/null 2>&1 || true
 done
 
-# profile is a copy, not a symlink
+# profile
 ln -s "${BASEDIR}/shell/profile" ${HOMEDIR}/.profile
 
 # bash
+ln -s "${BASEDIR}/shell/bashrc" ${HOMEDIR}/.bashrc
 ln -s "${BASEDIR}/shell/bash_profile" ${HOMEDIR}/.bash_profile
-
-# zsh
-ln -s "${BASEDIR}/shell/zshrc" ${HOMEDIR}/.zshrc
+ln -s "${BASEDIR}/shell/bash_aliases" ${HOMEDIR}/.bash_aliases
 
 # vim
 ln -s "${BASEDIR}/vim/vimrc" ${HOMEDIR}/.vimrc
-
-# emacs
-ln -s "${BASEDIR}/emacs/spacemacs" ${HOMEDIR}/.spacemacs
 
 # tmux
 ln -s "${BASEDIR}/tmux/tmux.conf" ${HOMEDIR}/.tmux.conf

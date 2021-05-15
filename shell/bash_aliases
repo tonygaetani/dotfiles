@@ -1,0 +1,56 @@
+alias ls='ls -Glah --color=always'
+alias watch='watch '
+
+# network compression stuff
+alias ssh='ssh -C'
+alias rsync='rsync --compress --progress --recursive'
+
+# git
+alias git-personal='git -c user.name="tony gaetani" -c user.email="tony.gaetani@gmail.com"'
+alias git-amend-author='git-personal commit -amend --author "tony gaetani <tony.gaetani@gmail.com>"'
+# I don't use this anymore, it's just here for memories
+git_ppc() {
+	echo 'stashing...'
+	git stash save
+	test $? != 1 || return
+	echo '...stashed'
+	echo 'pulling...'
+	git pull --rebase
+	test $? != 1 || return
+	echo '...pulled'
+	echo 'pushing...'
+	git push
+	test $? != 1 || return
+	echo '...pushed'
+	echo 'poping stash...'
+	git stash pop
+	test $? != 1 || return
+	echo '...popped'
+}
+alias git-clean-branches='git branch -vv | grep origin | grep gone | awk \'{print $1}\' | xargs -L 1 git branch -d'
+
+# ssl
+alias createcert='openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 999'
+alias encrypt='openssl aes-256-cbc -a'
+alias decrypt='openssl aes-256-cbc -d -a'
+
+# zlib
+alias zcompress='python -c "import zlib;import sys; sys.stdout.write(zlib.compress(sys.stdin.read()))"'
+alias zdecompress='python -c "import zlib;import sys; sys.stdout.write(zlib.decompress(sys.stdin.read()))"'
+
+# dates
+alias isodate='node -pe "new Date().toISOString()"'
+
+# kubectl
+alias k='kubectl'
+complete -F __start_kubectl k
+
+# bunyan
+alias bun='bunyan -L'
+alias buns='bunyan -L --color | egrep -I --color=never "^\["'
+
+# vscode
+alias ccode='code /home/tonygaetani/src/6rs-current.code-workspace'
+
+# 6RS
+alias 6rscode='code /home/tonygaetani/src/6rs.code-workspace'

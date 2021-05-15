@@ -1,50 +1,20 @@
-# ssh
-eval $(ssh-agent > /dev/null 2>&1)
-# path
-# add macports path
-export PATH="/opt/local/bin:/opt/local/sbin:${PATH}"
+export EDITOR=/usr/bin/vim
+
 # add home bin path
 export PATH="$(echo ~/bin):${PATH}"
-# aliases
-# general
-alias ls='ls -Glah'
-# git
-alias git-st='git status --porcelain | cut -f 3 -d " "'
-alias git-st-oneline='git-st | tr "\n" " "'
-alias git-push-branch='git push -u origin '
-alias git-amend-author='gitw commit -amend --author "tony gaetani <tony.gaetani@gmail.com>"'
-function __git_ppc {
-	echo 'stashing...'
-	git stash save
-	test $? != 1 || return
-	echo '...stashed'
-	echo 'pulling...'
-	git pull --rebase
-	test $? != 1 || return
-	echo '...pulled'
-	echo 'pushing...'
-	git push
-	test $? != 1 || return
-	echo '...pushed'
-	echo 'poping stash...'
-	git stash pop
-	test $? != 1 || return
-	echo '...popped'
-}
-alias git-ppc='__git_ppc'
-alias gitw='git -c user.name="tony gaetani" -c user.email="tony.gaetani@gmail.com"'
-# sublime text - requires command line tools installed and configured
-alias subl-st='subl -n $(git-st-oneline) &'
-# ssl
-alias createcert='openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 999'
-alias encrypt='openssl aes-256-cbc -a'
-alias decrypt='openssl aes-256-cbc -d -a'
-# zlib 
-alias zcompress='python -c "import zlib;import sys; sys.stdout.write(zlib.compress(sys.stdin.read()))"'
-alias zdecompress='python -c "import zlib;import sys; sys.stdout.write(zlib.decompress(sys.stdin.read()))"'
-# development stuff
-export PATH="$(echo ~/SWEngineering/android-sdk-linux):${PATH}"
-export ANDROID_HOME="$(echo ~/SWEngineering/android-sdk-linux)"
+
+# go
+export PATH="${PATH}:/usr/local/go/bin:${HOME}/go/bin"
+
+# docker 
 export DOCKER_EMAIL='tony.gaetani@gmail.com'
 export DOCKER_USER='tonygaetani'
 
+# vault
+export VAULT_ADDR=https://vault.6river.org
+
+# additional profiles
+mkdir -p ~/.profile.d 2>/dev/null || true
+for profile in $(find ~/.profile.d -type f); do source $profile; done
+
+eval "$(/bin/bash -c 'fasd --init auto' 2>/dev/null)"

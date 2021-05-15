@@ -1,5 +1,1 @@
-# set up fasd
-eval "$(/bin/bash -c 'fasd --init auto' 2>/dev/null)"
-
-source ~/.profile
-
+source ~/.bashrc

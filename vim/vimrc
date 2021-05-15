@@ -9,4 +9,5 @@ set backspace=2
 set backspace=indent,eol,start
 " use 4 space charachters for indentation
 set tabstop=4 softtabstop=0 shiftwidth=4 smarttab
-
+" mouse=v helps copy/paste work properly in terminal
+set mouse=v
