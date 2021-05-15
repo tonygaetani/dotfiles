@@ -100,7 +100,9 @@ source ~/.profile
 
 bind 'TAB:menu-complete'
 
-source /usr/lib/git-core/git-sh-prompt
+if [ -f /usr/lib/git-core/git-sh-prompt ]; then
+   source /usr/lib/git-core/git-sh-prompt
+fi
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 PS1=$'$(tput sgr0)$(printf %03d $?)$(tput sgr0) | $(tput setaf 2)\u@\H$(tput setaf 4) \\t $(tput setaf 3)[\w]$(tput setaf 1)$(__git_ps1)
