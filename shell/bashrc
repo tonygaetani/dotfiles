@@ -112,3 +112,6 @@ export IGNOREEOF=3
 
 # this fixes ctrl+a/ctrl+e in bash
 set -o emacs
+# hide warning on mac
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
