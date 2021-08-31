@@ -47,7 +47,7 @@ complete -F __start_kubectl k
 
 # bunyan
 alias bun='bunyan -L'
-alias buns='bunyan -L --color | egrep -I --color=never "^\["'
+alias buns='bunyan -L --color | egrep --binary-files=text -I --color=never "^\["'
 
 # vscode
 alias ccode='code /home/tonygaetani/src/6rs-current.code-workspace'
