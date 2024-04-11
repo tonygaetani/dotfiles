@@ -107,6 +107,8 @@ fi
 export GIT_PS1_SHOWDIRTYSTATE=1
 PS1=$'$(tput sgr0)$(printf %03d $?)$(tput sgr0) | $(tput setaf 2)\u@\H$(tput setaf 4) \\t $(tput setaf 3)[\w]$(tput setaf 1)$(__git_ps1)
 \\[$(tput sgr0)\\]-> % '
+# this shares history across tmux panes - https://askubuntu.com/a/1352448
+PROMPT_COMMAND="history -a; history -c; history -r"
 
 export IGNOREEOF=3
 
