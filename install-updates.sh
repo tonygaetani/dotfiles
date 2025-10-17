@@ -33,8 +33,8 @@ cat "$holds" | sed -e 's/hold$/install/' | sudo dpkg --set-selections
 sudo dpkg --configure -a
 # cleanup EXIT hook will deal with undoing this if orphaner fails otherwise
 
-# orphaner comes from deborphan package
-sudo orphaner --guess-all
+# orphaner used to come from deborphan package... but it's gone
+# sudo orphaner --guess-all
 
 # don't allow the un-holding to affect later stuff
 sudo dpkg --set-selections <"$holds"
