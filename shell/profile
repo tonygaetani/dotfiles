@@ -21,4 +21,5 @@ for profile in $(find ~/.profile.d -type f,l); do
 	source $profile
 done
 
-eval "$(/bin/bash -c 'fasd --init auto' 2>/dev/null)"
+eval "$(fasd --init auto)"
+
