@@ -1,3 +1,5 @@
 alias ls='ls -Glah --color=always'
 alias xclip='xclip -sel clip'
 alias peek='peek -b ffmpeg'
+
+export PATH="$HOME/.local/bin:$PATH"
