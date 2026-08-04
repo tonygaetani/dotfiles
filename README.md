@@ -10,25 +10,19 @@ My main tools are bash, vim, tmux, and fasd. When bash starts, it will source ~/
 bash -> bash_profile -> bashrc -> profile -> profile.d
 ```
 
+Because ~/.profile is re-sourced by every interactive shell, anything it does has to be safe to run twice. Use the `path_prepend`/`path_append` helpers it defines rather than assigning to PATH directly.
+
+~/.profile.d is where context-specific config lives, untracked files here are common.
+
 # Dependencies
 
-Start by making sure vim, tmux, and a recent version of bash is installed.
-
-## fasd
-
-A command line productivity booster.
-
 ```
-  git clone https://github.com/clvv/fasd
-  cd fasd
-  make install
+sudo apt install bash git vim tmux fasd
 ```
 
-See fasd/README.md for (much) more information.
+`setup` warns about anything missing but still lays the configs down.
 
 # Installation
-
-Ensure all dependencies are satisfied and then run setup:
 
 ```
 ./setup
@@ -36,4 +30,4 @@ Ensure all dependencies are satisfied and then run setup:
 
 ## setup
 
-Saves any files/folders that it might overwrite to .old{timestamp}, then copies files and creates symbolic links to configure the environment.
+Creates symlinks into the home directory. Anything it would overwrite that isn't already one of its own links is moved to ~/.old{timestamp} first, so re-running it is safe and leaves no new backups behind.

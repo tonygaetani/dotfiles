@@ -27,23 +27,33 @@ fi
 
 # HOMEDIR - directory that will receive dotfiles
 if [[ -z "${HOMEDIR-}" ]]; then
-  HOMEDIR=~/
+  HOMEDIR=$HOME
 fi
 
 # OLDDIR - directory that will receive old dotfiles in HOMEDIR
-OLDDIR=.old$(date +%s)
+OLDDIR="${HOMEDIR}/.old$(date +%s)"
 DOTFILES=("${HOMEDIR}/.profile" \
 "${HOMEDIR}/.bash_profile" \
+"${HOMEDIR}/.bashrc" \
+"${HOMEDIR}/.bash_aliases" \
 "${HOMEDIR}/.vimrc" \
-"${HOMEDIR}/.vim" \
 "${HOMEDIR}/.tmux.conf" \
-"${HOMEDIR}/.tmux" \
 )
 
-# remove the old files
-mkdir -p "${OLDDIR}"
+# Links we already own need no backup; without this every run litters home with another .old directory.
+needs_backup() {
+	[[ -e "$1" || -L "$1" ]] || return 1
+	case "$(readlink "$1" 2>/dev/null || true)" in
+		"${BASEDIR}"/*) return 1 ;;
+	esac
+	return 0
+}
+
+# move real files aside before replacing them with symlinks
 for file in "${DOTFILES[@]}"
 do
+	needs_backup "${file}" || continue
+	mkdir -p "${OLDDIR}" # created lazily so a clean re-run leaves no empty .old dir
 	# we don't care if this fails, hence the || true
 	mv "${file}" "${OLDDIR}" > /dev/null 2>&1 || true
 done
@@ -53,7 +63,6 @@ mkdir -p "${HOMEDIR}/.profile.d"
 ln -sf "${BASEDIR}/shell/profile" "${HOMEDIR}/.profile"
 
 # bash
-ln -sf "${BASEDIR}/shell/git-prompt.sh" "${HOMEDIR}/.git-prompt.sh"
 ln -sf "${BASEDIR}/shell/bashrc" "${HOMEDIR}/.bashrc"
 ln -sf "${BASEDIR}/shell/bash_profile" "${HOMEDIR}/.bash_profile"
 ln -sf "${BASEDIR}/shell/bash_aliases" "${HOMEDIR}/.bash_aliases"
@@ -64,14 +73,22 @@ ln -sf "${BASEDIR}/vim/vimrc" "${HOMEDIR}/.vimrc"
 # tmux
 ln -sf "${BASEDIR}/tmux/tmux.conf" "${HOMEDIR}/.tmux.conf"
 
-# os-specific
-if [[ -z "$(uname | grep Darwin || true)" ]]; then
-    # non-Mac, assume Linux
-    ln -sf "${BASEDIR}/shell/profile_linux" "${HOMEDIR}/.profile.d/profile_linux"
-    
-    # install-updates
-    mkdir -p "${HOMEDIR}/bin/"
-    ln -sf "${BASEDIR}/install-updates.sh" "${HOMEDIR}/bin/install-updates.sh"
-#else
-    # Mac
+# only linux for now... add cross platform support here if needed
+ln -sf "${BASEDIR}/shell/profile_linux" "${HOMEDIR}/.profile.d/profile_linux"
+
+# install-updates
+mkdir -p "${HOMEDIR}/bin/"
+ln -sf "${BASEDIR}/install-updates.sh" "${HOMEDIR}/bin/install-updates.sh"
+
+# Warn rather than install: shelling out to sudo apt from a dotfiles script is a surprise, and the
+# configs are still worth laying down before the tools arrive.
+DEPENDENCIES=(bash git vim tmux fasd)
+missing=()
+for dep in "${DEPENDENCIES[@]}"
+do
+	command -v "${dep}" > /dev/null 2>&1 || missing+=("${dep}")
+done
+if [[ ${#missing[@]} -gt 0 ]]; then
+	echo "warning: missing dependencies:" "${missing[@]}" >&2
+	echo "         sudo apt install" "${missing[@]}" >&2
 fi

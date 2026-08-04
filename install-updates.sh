@@ -13,16 +13,25 @@ echo "Updating ${distro} ${release}"
 
 holds=
 cleanup_debian() {
-	if [ -n "$holds" -a -f "$holds" ]; then
+	# separate tests rather than -a, which POSIX deprecated and which misbehaves on odd filenames
+	if [ -n "$holds" ] && [ -f "$holds" ]; then
 		sudo dpkg --set-selections < "$holds"
 	fi
 }
 
 trap cleanup_debian EXIT
 
-sudo apt update || read -p 'OK to continue? '
-#sudo apt upgrade --fix-missing || read -p 'OK to continue? '
-sudo apt full-upgrade --fix-missing || read -p 'OK to continue? '
+confirm() {
+	local reply
+	read -r -p "$1 [y/N] " reply
+	case "$reply" in
+		[yY] | [yY][eE][sS]) return 0 ;;
+		*) return 1 ;;
+	esac
+}
+
+sudo apt update || confirm 'apt update failed. Continue anyway?'
+sudo apt full-upgrade --fix-missing || confirm 'full-upgrade failed. Continue anyway?'
 sudo apt autoremove
 
 # deborphan can fail if held packages have triggers

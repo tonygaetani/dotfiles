@@ -1,13 +1,18 @@
 " show syntax highlighting
 syntax enable
+" load per-language indent rules so filetype can override the defaults below
+filetype plugin indent on
 " dark theme just like my heart
 set background=dark
 " show line numbers
 set number
 " re-enable backspace usage
-set backspace=2
 set backspace=indent,eol,start
 " use 4 space charachters for indentation
 set tabstop=4 softtabstop=0 shiftwidth=4 smarttab
+" spaces by default: python is the common case and it hard-errors on mixed indentation
+set expandtab
+" go and make are tab-significant, so opt them back out
+autocmd FileType go,make setlocal noexpandtab
 " mouse=v helps copy/paste work properly in terminal
 set mouse=v

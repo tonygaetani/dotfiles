@@ -1,27 +1,37 @@
 export EDITOR=/usr/bin/vim
 
-# add home bin path
-export PATH="$(echo ~/bin):${PATH}"
+# ~/.bashrc sources this on every interactive shell and the display manager again at login, so PATH
+# edits must be idempotent
+path_prepend() {
+	case ":${PATH}:" in
+		*":$1:"*) ;;
+		*) PATH="$1${PATH:+:${PATH}}" ;;
+	esac
+}
+
+path_append() {
+	case ":${PATH}:" in
+		*":$1:"*) ;;
+		*) PATH="${PATH:+${PATH}:}$1" ;;
+	esac
+}
+
+# home bin path
+path_prepend "$HOME/bin"
 
 # go
-export PATH="${PATH}:/usr/local/go/bin:${HOME}/go/bin"
+path_append /usr/local/go/bin
+path_append "$HOME/go/bin"
 
-# docker 
-export DOCKER_EMAIL='tony.gaetani@gmail.com'
-export DOCKER_USER='tonygaetani'
-
-# vault
-export VAULT_ADDR=https://vault.6river.org
-
-source ~/.git-prompt.sh
+export PATH
 
 # additional profiles
 mkdir -p ~/.profile.d 2>/dev/null || true
-for profile in $(find ~/.profile.d -type f,l); do
-	source $profile
+for profile in "$HOME"/.profile.d/*; do
+	[ -f "$profile" ] || continue # -f follows symlinks, so this skips broken links and subdirectories
+	source "$profile"
 done
 
 if command -v fasd &>/dev/null; then
 	eval "$(fasd --init auto)"
 fi
-
